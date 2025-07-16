@@ -1,6 +1,7 @@
 import { parse } from 'cookie';
 import Link from 'next/link';
 import Router from 'next/router';
+import { useEffect, useState } from 'react';
 
 export async function getServerSideProps({ req }) {
   const cookies = parse(req.headers.cookie || '');
@@ -12,15 +13,43 @@ export async function getServerSideProps({ req }) {
       },
     };
   }
-  return { props: {} };
+  // Ambil email user dari cookie jika ada (atau bisa dari session)
+  const userEmail = cookies.user_email || '';
+  return { props: { userEmail } };
 }
 
-export default function UserDashboard() {
+export default function UserDashboard({ userEmail }) {
   // Logout handler
   const handleLogout = () => {
     document.cookie = 'user_auth=; Max-Age=0; path=/';
+    document.cookie = 'user_email=; Max-Age=0; path=/';
     Router.push('/');
   };
+
+  // State untuk ringkasan dan riwayat
+  const [summary, setSummary] = useState({ Diajukan: 0, Diproses: 0, Selesai: 0, Ditolak: 0 });
+  const [recent, setRecent] = useState([]);
+
+  useEffect(() => {
+    async function fetchPengajuan() {
+      const res = await fetch('/api/pengajuan_surat');
+      const json = await res.json();
+      let email = userEmail;
+      if (!email) {
+        // Coba ambil dari localStorage jika userEmail tidak ada di props
+        email = (typeof window !== 'undefined') ? localStorage.getItem('user_email') : '';
+      }
+      // Filter pengajuan milik user
+      const userPengajuan = json.pengajuanSurat.filter(p => p.email === email);
+      // Hitung status
+      const stat = { Diajukan: 0, Diproses: 0, Selesai: 0, Ditolak: 0 };
+      userPengajuan.forEach(s => { if (stat[s.status] !== undefined) stat[s.status]++; });
+      setSummary(stat);
+      // Ambil 3 pengajuan terakhir
+      setRecent(userPengajuan.sort((a,b) => new Date(b.tanggal)-new Date(a.tanggal)).slice(0,3));
+    }
+    fetchPengajuan();
+  }, [userEmail]);
 
   return (
     <div className="neon-dashboard-bg">
@@ -51,6 +80,57 @@ export default function UserDashboard() {
             >
               Keluar
             </button>
+          </div>
+        </div>
+        {/* Ringkasan dan Riwayat hanya tampil di desktop/tablet */}
+        <div className="neon-dashboard-extras">
+          <div className="neon-summary-card">
+            <h4>Ringkasan Status Pengajuan</h4>
+            <div className="neon-summary-row">
+              <div className="neon-summary-item" style={{background:'#3498db22', color:'#3498db'}}>
+                <span className="neon-summary-label">Diajukan</span>
+                <span className="neon-summary-value">{summary.Diajukan}</span>
+              </div>
+              <div className="neon-summary-item" style={{background:'#f1c40f22', color:'#f1c40f'}}>
+                <span className="neon-summary-label">Diproses</span>
+                <span className="neon-summary-value">{summary.Diproses}</span>
+              </div>
+              <div className="neon-summary-item" style={{background:'#2ecc7122', color:'#2ecc71'}}>
+                <span className="neon-summary-label">Selesai</span>
+                <span className="neon-summary-value">{summary.Selesai}</span>
+              </div>
+              <div className="neon-summary-item" style={{background:'#e74c3c22', color:'#e74c3c'}}>
+                <span className="neon-summary-label">Ditolak</span>
+                <span className="neon-summary-value">{summary.Ditolak}</span>
+              </div>
+            </div>
+          </div>
+          <div className="neon-recent-card">
+            <h4>Riwayat Pengajuan Terakhir</h4>
+            {recent.length === 0 ? (
+              <div className="neon-recent-empty">Belum ada pengajuan surat</div>
+            ) : (
+              <table className="neon-recent-table">
+                <thead>
+                  <tr>
+                    <th>Jenis</th>
+                    <th>Keterangan</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recent.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>{item.jenisSurat}</td>
+                      <td>{item.keterangan}</td>
+                      <td>{new Date(item.tanggal).toLocaleDateString()}</td>
+                      <td><span className="neon-status-badge" data-status={item.status}>{item.status}</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
         <div className="alur-card">
@@ -253,6 +333,104 @@ export default function UserDashboard() {
           color: #fff;
           font-size: 1.04rem;
         }
+        .neon-dashboard-extras {
+          display: flex;
+          gap: 32px;
+          margin: 36px auto 0 auto;
+          max-width: 1100px;
+          justify-content: center;
+        }
+        .neon-summary-card, .neon-recent-card {
+          background: rgba(0,255,247,0.10);
+          border-radius: 18px;
+          box-shadow: 0 0 12px #00fff744;
+          border: 1.5px solid #00fff7;
+          padding: 22px 18px 18px 18px;
+          min-width: 260px;
+          max-width: 340px;
+          flex: 1 1 320px;
+        }
+        .neon-summary-card h4, .neon-recent-card h4 {
+          color: #00fff7;
+          font-size: 1.08rem;
+          font-weight: 700;
+          margin-bottom: 14px;
+          text-align: center;
+          text-shadow: 0 0 8px #00fff7;
+        }
+        .neon-summary-row {
+          display: flex;
+          gap: 10px;
+          justify-content: space-between;
+        }
+        .neon-summary-item {
+          flex: 1 1 0;
+          border-radius: 12px;
+          padding: 10px 0 6px 0;
+          text-align: center;
+          font-weight: 700;
+          font-size: 1.08rem;
+          box-shadow: 0 0 8px #00fff733;
+        }
+        .neon-summary-label {
+          display: block;
+          font-size: 0.98rem;
+          margin-bottom: 2px;
+        }
+        .neon-summary-value {
+          font-size: 1.18rem;
+        }
+        .neon-recent-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 0.98rem;
+        }
+        .neon-recent-table th, .neon-recent-table td {
+          padding: 6px 8px;
+          text-align: left;
+        }
+        .neon-recent-table th {
+          color: #00fff7;
+          font-weight: 700;
+          background: rgba(0,255,247,0.08);
+        }
+        .neon-recent-table td {
+          color: #fff;
+          background: rgba(0,255,247,0.03);
+        }
+        .neon-status-badge {
+          display: inline-block;
+          padding: 2px 12px;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 0.97rem;
+          background: #222;
+          color: #fff;
+        }
+        .neon-status-badge[data-status="Diajukan"] { background: #3498db; }
+        .neon-status-badge[data-status="Diproses"] { background: #f1c40f; color: #222; }
+        .neon-status-badge[data-status="Selesai"] { background: #2ecc71; }
+        .neon-status-badge[data-status="Ditolak"] { background: #e74c3c; }
+        .neon-recent-empty {
+          color: #fff;
+          text-align: center;
+          font-style: italic;
+          padding: 10px 0;
+        }
+        @media (max-width: 1100px) {
+          .neon-dashboard-extras {
+            flex-direction: column;
+            gap: 18px;
+            max-width: 98vw;
+          }
+        }
+        @media (max-width: 900px) {
+          .neon-dashboard-extras {
+            flex-direction: column;
+            gap: 18px;
+            max-width: 98vw;
+          }
+        }
         @media (max-width: 700px) {
           .neon-dashboard-wrapper {
             max-width: 100vw;
@@ -294,6 +472,9 @@ export default function UserDashboard() {
           }
           .alur-step-text {
             font-size: 0.97rem;
+          }
+          .neon-dashboard-extras {
+            display: none;
           }
         }
       `}</style>
