@@ -22,7 +22,8 @@
     "next": "latest",
     "pdfkit": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "recharts": "^3.1.0"
   },
   "devDependencies": {
     "prisma": "^6.12.0"
