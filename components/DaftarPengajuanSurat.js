@@ -41,36 +41,36 @@ export default function DaftarPengajuanSurat() {
         <h2 className="pengajuan-title">Daftar Permohonan Surat</h2>
         {loading && <div className="pengajuan-loading">Memuat data...</div>}
         {error && <div className="pengajuan-error">{error}</div>}
-        {!loading && !error && (
+      {!loading && !error && (
           <div className="table-wrapper">
             <table className="pengajuan-table">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Jenis Surat</th>
-                  <th>Keterangan</th>
-                  <th>Tanggal</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.length === 0 ? (
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Jenis Surat</th>
+              <th>Keterangan</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length === 0 ? (
                   <tr><td colSpan="5" className="empty-row">Belum ada permohonan surat</td></tr>
-                ) : (
-                  data.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td>{idx + 1}</td>
-                      <td>{item.jenisSurat}</td>
-                      <td>{item.keterangan}</td>
-                      <td>{new Date(item.tanggal).toLocaleString()}</td>
+            ) : (
+              data.map((item, idx) => (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.jenisSurat}</td>
+                  <td>{item.keterangan}</td>
+                  <td>{new Date(item.tanggal).toLocaleString()}</td>
                       <td>
                         <span className="status-badge" style={{ background: statusColor(item.status) }}>{item.status}</span>
                       </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
           </div>
         )}
       </div>
