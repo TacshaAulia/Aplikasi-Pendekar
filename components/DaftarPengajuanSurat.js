@@ -72,7 +72,7 @@ export default function DaftarPengajuanSurat() {
           </tbody>
         </table>
           </div>
-        )}
+      )}
       </div>
       <style jsx>{`
         .pengajuan-container {

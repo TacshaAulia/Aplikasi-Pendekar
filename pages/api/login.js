@@ -1,18 +1,15 @@
-export default function handler(req, res) {
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
   const { email, password } = req.body;
+  const admin = await prisma.admin.findUnique({ where: { email } });
 
-  // Contoh data admin (seharusnya dari database)
-  const admin = {
-    email: 'admin@desa.com',
-    password: 'admin123', // sebaiknya di-hash di production!
-  };
-
-  if (email === admin.email && password === admin.password) {
-    // Set cookie session sederhana
+  if (admin && admin.password === password) { // Untuk produksi, gunakan hash!
     res.setHeader('Set-Cookie', `admin_auth=1; Path=/; HttpOnly; SameSite=Strict`);
     return res.status(200).json({ message: 'Login berhasil' });
   } else {
