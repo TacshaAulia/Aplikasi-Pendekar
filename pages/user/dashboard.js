@@ -1,5 +1,6 @@
 import { parse } from 'cookie';
 import Link from 'next/link';
+import Router from 'next/router';
 
 export async function getServerSideProps({ req }) {
   const cookies = parse(req.headers.cookie || '');
@@ -15,8 +16,34 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function UserDashboard() {
+  // Logout handler
+  const handleLogout = () => {
+    document.cookie = 'user_auth=; Max-Age=0; path=/';
+    Router.push('/');
+  };
+
   return (
     <div className="user-dashboard-bg">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 8 }}>
+        <button
+          onClick={handleLogout}
+          style={{
+            padding: '8px 22px',
+            borderRadius: 16,
+            border: 'none',
+            background: 'linear-gradient(90deg,#e96443,#904e95)',
+            color: '#fff',
+            fontWeight: 700,
+            fontSize: 16,
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px #0002',
+            transition: 'background 0.2s',
+            marginRight: 8,
+          }}
+        >
+          Keluar
+        </button>
+      </div>
       <div className="user-dashboard-card">
         <h1 className="user-dashboard-title">👋 Selamat Datang di Dashboard User</h1>
         <p className="user-dashboard-sub">Aplikasi Pelayanan Surat Desa Karyalaksana</p>
