@@ -5,13 +5,21 @@ export default function handler(req, res) {
 
   const { email, password } = req.body;
 
-  // Contoh data user (seharusnya dari database)
-  const user = {
-    email: 'user@desa.com',
-    password: 'user123', // sebaiknya di-hash di production!
-  };
+  // Daftar user yang valid
+  const users = [
+    {
+      email: 'user@desa.com',
+      password: 'user123', // sebaiknya di-hash di production!
+    },
+    {
+      email: 'andi@gmail.com',
+      password: 'andi123',
+    },
+  ];
 
-  if (email === user.email && password === user.password) {
+  const user = users.find(u => u.email === email && u.password === password);
+
+  if (user) {
     // Set cookie session sederhana
     res.setHeader('Set-Cookie', `user_auth=1; Path=/; HttpOnly; SameSite=Strict`);
     return res.status(200).json({ message: 'Login berhasil' });

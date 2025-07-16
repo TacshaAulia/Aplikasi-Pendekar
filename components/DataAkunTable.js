@@ -72,45 +72,45 @@ export default function DataAkunTable() {
         <form className="data-akun-form" onSubmit={handleSubmit} autoComplete="off">
           <input name="email" value={form.email} onChange={handleChange} placeholder="Email" required />
           <input name="nama" value={form.nama} onChange={handleChange} placeholder="Nama" required />
-          <select name="role" value={form.role} onChange={handleChange} required>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+        <select name="role" value={form.role} onChange={handleChange} required>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
           </select>
           <button type="submit" className="btn-primary">{editId ? 'Update' : 'Tambah'}</button>
           {editId && <button type="button" className="btn-secondary" onClick={() => { setEditId(null); setForm({ email: '', nama: '', role: 'user' }); }}>Batal</button>}
-        </form>
+      </form>
         {error && <div className="data-akun-error">{error}</div>}
         {loading ? <div className="data-akun-loading">Memuat data...</div> : (
           <div className="table-wrapper">
             <table className="data-akun-table">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Email</th>
-                  <th>Nama</th>
-                  <th>Role</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.length === 0 ? (
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Email</th>
+              <th>Nama</th>
+              <th>Role</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length === 0 ? (
                   <tr><td colSpan="5" className="empty-row">Belum ada data</td></tr>
-                ) : (
-                  data.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td>{idx + 1}</td>
-                      <td>{item.email}</td>
-                      <td>{item.nama}</td>
-                      <td>{item.role}</td>
-                      <td>
+            ) : (
+              data.map((item, idx) => (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.email}</td>
+                  <td>{item.nama}</td>
+                  <td>{item.role}</td>
+                  <td>
                         <button className="btn-action" onClick={() => handleEdit(item)}>Edit</button>{' '}
                         <button className="btn-danger" onClick={() => handleDelete(item.id)}>Hapus</button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
           </div>
         )}
       </div>

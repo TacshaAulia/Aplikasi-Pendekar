@@ -76,41 +76,41 @@ export default function DataAparatTable() {
           <input name="alamat" value={form.alamat} onChange={handleChange} placeholder="Alamat" required />
           <button type="submit" className="btn-primary">{editId ? 'Update' : 'Tambah'}</button>
           {editId && <button type="button" className="btn-secondary" onClick={() => { setEditId(null); setForm({ nama: '', jabatan: '', nip: '', alamat: '' }); }}>Batal</button>}
-        </form>
+      </form>
         {error && <div className="data-aparat-error">{error}</div>}
         {loading ? <div className="data-aparat-loading">Memuat data...</div> : (
           <div className="table-wrapper">
             <table className="data-aparat-table">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama</th>
-                  <th>Jabatan</th>
-                  <th>NIP</th>
-                  <th>Alamat</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.length === 0 ? (
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Jabatan</th>
+              <th>NIP</th>
+              <th>Alamat</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length === 0 ? (
                   <tr><td colSpan="6" className="empty-row">Belum ada data</td></tr>
-                ) : (
-                  data.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td>{idx + 1}</td>
-                      <td>{item.nama}</td>
-                      <td>{item.jabatan}</td>
-                      <td>{item.nip}</td>
-                      <td>{item.alamat}</td>
-                      <td>
+            ) : (
+              data.map((item, idx) => (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.nama}</td>
+                  <td>{item.jabatan}</td>
+                  <td>{item.nip}</td>
+                  <td>{item.alamat}</td>
+                  <td>
                         <button className="btn-action" onClick={() => handleEdit(item)}>Edit</button>{' '}
                         <button className="btn-danger" onClick={() => handleDelete(item.id)}>Hapus</button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
           </div>
         )}
       </div>

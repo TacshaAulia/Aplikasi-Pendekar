@@ -2,6 +2,7 @@ import { parse } from 'cookie';
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import Link from 'next/link';
+import Router from 'next/router';
 
 export async function getServerSideProps({ req }) {
   const cookies = parse(req.headers.cookie || '');
@@ -77,8 +78,36 @@ export default function AdminDashboard() {
     }
   };
 
+  // Logout handler
+  const handleLogout = () => {
+    // Hapus cookie admin_auth
+    document.cookie = 'admin_auth=; Max-Age=0; path=/';
+    // Redirect ke halaman utama
+    Router.push('/');
+  };
+
   return (
     <div className="admin-dashboard-container">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 16 }}>
+        <button
+          onClick={handleLogout}
+          style={{
+            padding: '8px 22px',
+            borderRadius: 16,
+            border: 'none',
+            background: 'linear-gradient(90deg,#e96443,#904e95)',
+            color: '#fff',
+            fontWeight: 700,
+            fontSize: 16,
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px #0002',
+            transition: 'background 0.2s',
+            marginRight: 8,
+          }}
+        >
+          Keluar
+        </button>
+      </div>
       <div className="dashboard-actions">
         <Link href="/admin/data-admin" legacyBehavior><a className="action-btn">Data Admin</a></Link>
         <Link href="/admin/data-akun" legacyBehavior><a className="action-btn">Data Akun</a></Link>

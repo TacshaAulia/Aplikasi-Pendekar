@@ -110,37 +110,37 @@ export default function DataSuratTable() {
           <input name="pemohon" value={form.pemohon} onChange={handleChange} placeholder="Nama Pemohon" required style={inputStyle} />
           <input name="tanggal" value={form.tanggal} onChange={handleChange} placeholder="Tanggal (YYYY-MM-DD)" required style={inputStyle} />
           <select name="status" value={form.status} onChange={handleChange} required style={selectStyle}>
-            {STATUS_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+          {STATUS_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
           </select>
           <button type="submit" style={buttonStyle}>{editId ? 'Update' : 'Tambah'}</button>
           {editId && <button type="button" style={{...buttonStyle, background:'#888'}} onClick={() => { setEditId(null); setForm({ jenis: '', nomor: '', pemohon: '', tanggal: '', status: 'Diajukan' }); }}>Batal</button>}
-        </form>
+      </form>
         {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: 16 }}>{error}</p>}
         {loading ? <p style={{ color: '#fff', textAlign: 'center' }}>Memuat data...</p> : (
           <div style={{ overflowX: 'auto' }}>
             <table style={tableStyle}>
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Jenis</th>
-                  <th>Nomor</th>
-                  <th>Pemohon</th>
-                  <th>Tanggal</th>
-                  <th>Status</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.length === 0 ? (
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Jenis</th>
+              <th>Nomor</th>
+              <th>Pemohon</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length === 0 ? (
                   <tr><td colSpan="7" style={{ textAlign: 'center', color: '#fff' }}>Belum ada data</td></tr>
-                ) : (
-                  data.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td>{idx + 1}</td>
-                      <td>{item.jenis}</td>
-                      <td>{item.nomor}</td>
-                      <td>{item.pemohon}</td>
-                      <td>{item.tanggal}</td>
+            ) : (
+              data.map((item, idx) => (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.jenis}</td>
+                  <td>{item.nomor}</td>
+                  <td>{item.pemohon}</td>
+                  <td>{item.tanggal}</td>
                       <td>
                         <span style={{
                           display: 'inline-block',
@@ -155,18 +155,18 @@ export default function DataSuratTable() {
                       <td>
                         <button style={actionBtn} onClick={() => handleEdit(item)}>Edit</button>{' '}
                         <button style={{...actionBtn, background:'#e74c3c'}} onClick={() => handleDelete(item.id)}>Hapus</button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
           </div>
-        )}
+      )}
       </div>
     </div>
   );
-}
+} 
 
 const inputStyle = {
   padding: '10px 14px',
