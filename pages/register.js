@@ -1,83 +1,86 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-export default function UserLoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function RegisterUser() {
+  const [form, setForm] = useState({ nama: '', email: '', password: '', confirm: '' });
   const [error, setError] = useState('');
-  const router = useRouter();
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleChange = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setError('');
+    setSuccess('');
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
     setError('');
+    setSuccess('');
+    if (!form.nama || !form.email || !form.password || !form.confirm) {
+      setError('Semua field wajib diisi!');
+      return;
+    }
+    if (form.password.length < 6) {
+      setError('Password minimal 6 karakter!');
+      return;
+    }
+    if (form.password !== form.confirm) {
+      setError('Konfirmasi password tidak cocok!');
+      return;
+    }
     setLoading(true);
-    const res = await fetch('/api/user_login', {
+    const res = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ nama: form.nama, email: form.email, password: form.password }),
     });
     setLoading(false);
     if (res.ok) {
-      router.push('/user/dashboard');
+      setSuccess('Pendaftaran berhasil! Silakan login.');
+      setTimeout(() => router.push('/'), 1500);
     } else {
       const data = await res.json();
-      setError(data.message);
+      setError(data.message || 'Pendaftaran gagal!');
     }
   };
 
   return (
-    <div className="login-user-container">
-      <form className="login-user-form" onSubmit={handleSubmit} autoComplete="off">
-        <h2 className="login-title">Login User</h2>
-        {error && <div className="login-error">{error}</div>}
+    <div className="register-user-container">
+      <form className="register-user-form" onSubmit={handleSubmit} autoComplete="off">
+        <h2 className="register-title">Daftar Akun Baru</h2>
+        {error && <div className="register-error">{error}</div>}
+        {success && <div className="register-success">{success}</div>}
         <div className="input-group">
-          <label htmlFor="email">
-            <span className="icon">📧</span> Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            placeholder="youremail@email.com"
-            autoFocus
-          />
+          <label htmlFor="nama"><span className="icon">👤</span> Nama Lengkap</label>
+          <input id="nama" name="nama" type="text" value={form.nama} onChange={handleChange} required placeholder="Nama lengkap" />
         </div>
         <div className="input-group">
-          <label htmlFor="password">
-            <span className="icon">🔒</span> Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            placeholder="••••••••"
-          />
+          <label htmlFor="email"><span className="icon">📧</span> Email</label>
+          <input id="email" name="email" type="email" value={form.email} onChange={handleChange} required placeholder="youremail@email.com" />
         </div>
-        <button className="login-btn" type="submit" disabled={loading}>
-          {loading ? 'Memproses...' : 'Login'}
-        </button>
-        <div className="register-link">
-          Belum punya akun?{' '}
-          <a href="/register" style={{ color: '#764ba2', fontWeight: 600, textDecoration: 'underline', cursor: 'pointer' }}>
-            Daftar di sini
-          </a>
+        <div className="input-group">
+          <label htmlFor="password"><span className="icon">🔒</span> Password</label>
+          <input id="password" name="password" type="password" value={form.password} onChange={handleChange} required placeholder="Minimal 6 karakter" />
         </div>
+        <div className="input-group">
+          <label htmlFor="confirm"><span className="icon">🔒</span> Konfirmasi Password</label>
+          <input id="confirm" name="confirm" type="password" value={form.confirm} onChange={handleChange} required placeholder="Ulangi password" />
+        </div>
+        <button className="register-btn" type="submit" disabled={loading}>{loading ? 'Memproses...' : 'Daftar'}</button>
+        <div className="register-link">Sudah punya akun?{' '}<a href="/" style={{ color: '#764ba2', fontWeight: 600, textDecoration: 'underline', cursor: 'pointer' }}>Login di sini</a></div>
       </form>
       <style jsx>{`
-        .login-user-container {
+        .register-user-container {
           display: flex;
           justify-content: center;
           align-items: center;
-          min-height: 400px;
+          min-height: 500px;
         }
-        .login-user-form {
+        .register-user-form {
           width: 100%;
-          max-width: 370px;
+          max-width: 400px;
           background: rgba(255,255,255,0.15);
           border-radius: 18px;
           box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
@@ -89,7 +92,7 @@ export default function UserLoginForm() {
           gap: 18px;
           animation: fadeInLogin 1s cubic-bezier(.39,.575,.56,1) both;
         }
-        .login-title {
+        .register-title {
           text-align: center;
           font-size: 2rem;
           font-weight: 700;
@@ -98,9 +101,17 @@ export default function UserLoginForm() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .login-error {
+        .register-error {
           background: rgba(255,0,0,0.08);
           color: #d90429;
+          border-radius: 8px;
+          padding: 8px 12px;
+          text-align: center;
+          font-size: 0.98rem;
+        }
+        .register-success {
+          background: rgba(0,200,0,0.08);
+          color: #059669;
           border-radius: 8px;
           padding: 8px 12px;
           text-align: center;
@@ -135,7 +146,7 @@ export default function UserLoginForm() {
           border: 1.5px solid #764ba2;
           background: #fff;
         }
-        .login-btn {
+        .register-btn {
           margin-top: 10px;
           padding: 12px 0;
           border-radius: 8px;
@@ -149,10 +160,10 @@ export default function UserLoginForm() {
           box-shadow: 0 2px 8px rgba(118,75,162,0.12);
           transition: background 0.2s, transform 0.1s;
         }
-        .login-btn:active {
+        .register-btn:active {
           transform: scale(0.98);
         }
-        .login-btn:disabled {
+        .register-btn:disabled {
           background: #a5b4fc;
           cursor: not-allowed;
         }
@@ -172,7 +183,7 @@ export default function UserLoginForm() {
           }
         }
         @media (max-width: 500px) {
-          .login-user-form {
+          .register-user-form {
             padding: 24px 10px 18px 10px;
           }
         }
