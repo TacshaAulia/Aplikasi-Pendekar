@@ -2,6 +2,11 @@ let dataAkun = [
   // Contoh data awal
   { id: 1, email: 'admin@desa.com', nama: 'Admin', role: 'admin' },
   { id: 2, email: 'user@desa.com', nama: 'User', role: 'user' },
+  // User tambahan
+  { id: 3, email: 'budi@gmail.com', nama: 'Budi Santoso', role: 'user' },
+  { id: 4, email: 'siti@gmail.com', nama: 'Siti Aminah', role: 'user' },
+  { id: 5, email: 'agus@gmail.com', nama: 'Agus Salim', role: 'user' },
+  { id: 6, email: 'rina@gmail.com', nama: 'Rina Marlina', role: 'user' },
 ];
 
 export default function handler(req, res) {
