@@ -441,12 +441,71 @@ export default function AdminDashboard() {
             transform: translateY(0) scale(1);
           }
         }
+        @media (max-width: 900px) {
+          .admin-dashboard-container {
+            padding: 18px 4px;
+          }
+          .dashboard-grid {
+            gap: 14px;
+          }
+          .dashboard-section {
+            margin-top: 24px;
+          }
+          .dashboard-section-title {
+            font-size: 1.05rem;
+          }
+        }
         @media (max-width: 600px) {
+          .admin-dashboard-container {
+            padding: 8px 0;
+            margin: 12px 0 0 0;
+          }
           .dashboard-title {
             font-size: 1.5rem;
           }
           .dashboard-card {
-            padding: 18px 6px 12px 6px;
+            padding: 14px 2px 10px 2px;
+            min-width: 0;
+          }
+          .dashboard-label {
+            font-size: 0.95rem;
+          }
+          .dashboard-value {
+            font-size: 1.2rem;
+          }
+          .dashboard-section {
+            margin-top: 18px;
+          }
+          .dashboard-section-title {
+            font-size: 0.98rem;
+          }
+          .dashboard-actions {
+            gap: 6px;
+            margin-bottom: 16px;
+          }
+          .action-btn {
+            padding: 8px 10px;
+            font-size: 0.95rem;
+          }
+          .quick-form {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+          }
+          .quick-form input, .quick-form select, .quick-form button {
+            width: 100%;
+            font-size: 0.98rem;
+          }
+          .dashboard-chart-wrapper {
+            min-height: 180px;
+            padding: 8px 2px 2px 2px;
+          }
+          .table-wrapper {
+            margin: 0 -8px;
+          }
+          .pengajuan-table th, .pengajuan-table td {
+            padding: 8px 4px;
+            font-size: 0.95rem;
           }
         }
       `}</style>
