@@ -1,6 +1,7 @@
 import { parse } from 'cookie';
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
+import Link from 'next/link';
 
 export async function getServerSideProps({ req }) {
   const cookies = parse(req.headers.cookie || '');
@@ -78,6 +79,14 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-dashboard-container">
+      <div className="dashboard-actions">
+        <Link href="/admin/data-admin" legacyBehavior><a className="action-btn">Data Admin</a></Link>
+        <Link href="/admin/data-akun" legacyBehavior><a className="action-btn">Data Akun</a></Link>
+        <Link href="/admin/data-aparat" legacyBehavior><a className="action-btn">Data Aparat</a></Link>
+        <Link href="/admin/data-penduduk" legacyBehavior><a className="action-btn">Data Penduduk</a></Link>
+        <Link href="/admin/data-permohonan" legacyBehavior><a className="action-btn">Data Permohonan</a></Link>
+        <Link href="/admin/data-surat" legacyBehavior><a className="action-btn">Data Surat</a></Link>
+      </div>
       <h1 className="dashboard-title">Dashboard Admin</h1>
       <p className="dashboard-sub">Selamat datang di panel administrasi aplikasi Pendekar!</p>
       {loading ? (
@@ -367,6 +376,31 @@ export default function AdminDashboard() {
           font-weight: 600;
           letter-spacing: 0.5px;
           box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+        }
+        .dashboard-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: center;
+          margin-bottom: 28px;
+        }
+        .action-btn {
+          padding: 10px 20px;
+          border-radius: 8px;
+          background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+          color: #fff;
+          font-weight: 600;
+          font-size: 1rem;
+          text-decoration: none;
+          box-shadow: 0 2px 8px rgba(118,75,162,0.10);
+          border: none;
+          transition: background 0.2s, transform 0.1s;
+          cursor: pointer;
+          letter-spacing: 0.5px;
+        }
+        .action-btn:hover {
+          background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+          transform: translateY(-2px) scale(1.04);
         }
         @keyframes fadeInLogin {
           0% {
