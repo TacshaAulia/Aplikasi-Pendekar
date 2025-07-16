@@ -23,142 +23,278 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="user-dashboard-bg">
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 8 }}>
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: '8px 22px',
-            borderRadius: 16,
-            border: 'none',
-            background: 'linear-gradient(90deg,#e96443,#904e95)',
-            color: '#fff',
-            fontWeight: 700,
-            fontSize: 16,
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px #0002',
-            transition: 'background 0.2s',
-            marginRight: 8,
-          }}
-        >
-          Keluar
-        </button>
-      </div>
-      <div className="user-dashboard-card">
-        <h1 className="user-dashboard-title">👋 Selamat Datang di Dashboard User</h1>
-        <p className="user-dashboard-sub">Aplikasi Pelayanan Surat Desa Karyalaksana</p>
-        <div className="user-dashboard-actions">
-          <Link href="/user/pengajuan" legacyBehavior>
-            <a className="user-btn user-btn-primary">Ajukan Surat</a>
-          </Link>
-          <Link href="/user/daftar-permohonan" legacyBehavior>
-            <a className="user-btn">Lihat Permohonan Surat</a>
-          </Link>
+    <div className="neon-dashboard-bg">
+      <div className="neon-dashboard-wrapper">
+        <div className="neon-dashboard-card">
+          <h1 className="neon-dashboard-title">👾 Dashboard User</h1>
+          <p className="neon-dashboard-sub">Aplikasi Pelayanan Surat Desa Karyalaksana</p>
+          <div className="neon-dashboard-actions">
+            <Link href="/user/pengajuan" legacyBehavior>
+              <a className="neon-btn neon-btn-primary">Ajukan Surat</a>
+            </Link>
+            <Link href="/user/daftar-permohonan" legacyBehavior>
+              <a className="neon-btn">Lihat Permohonan Surat</a>
+            </Link>
+          </div>
+          <div className="neon-dashboard-feature-card">
+            <h3>✨ Fitur Dashboard User</h3>
+            <ul>
+              <li>Mengajukan permohonan surat secara online</li>
+              <li>Melihat daftar & status permohonan surat</li>
+              <li>Mendapatkan notifikasi status permohonan</li>
+            </ul>
+          </div>
+          <div className="neon-dashboard-logout-wrapper">
+            <button
+              onClick={handleLogout}
+              className="neon-btn neon-btn-logout"
+            >
+              Keluar
+            </button>
+          </div>
         </div>
-        <div className="user-dashboard-feature-card">
-          <h3>✨ Fitur Dashboard User</h3>
-          <ul>
-            <li>Mengajukan permohonan surat secara online</li>
-            <li>Melihat daftar & status permohonan surat</li>
-            <li>Mendapatkan notifikasi status permohonan</li>
-          </ul>
+        <div className="alur-card">
+          <h3 className="alur-title">Contoh Alur Pengajuan Surat ke Desa</h3>
+          <ol className="alur-steps">
+            <li>
+              <span className="alur-step-num">1</span>
+              <span className="alur-step-text">Login ke aplikasi sebagai user</span>
+            </li>
+            <li>
+              <span className="alur-step-num">2</span>
+              <span className="alur-step-text">Klik <b>Ajukan Surat</b> dan isi formulir pengajuan sesuai kebutuhan</span>
+            </li>
+            <li>
+              <span className="alur-step-num">3</span>
+              <span className="alur-step-text">Tunggu proses verifikasi dan persetujuan dari admin desa</span>
+            </li>
+            <li>
+              <span className="alur-step-num">4</span>
+              <span className="alur-step-text">Cek status permohonan di menu <b>Lihat Permohonan Surat</b></span>
+            </li>
+            <li>
+              <span className="alur-step-num">5</span>
+              <span className="alur-step-text">Jika disetujui, unduh surat yang sudah jadi</span>
+            </li>
+          </ol>
         </div>
       </div>
       <style jsx>{`
-        .user-dashboard-bg {
+        .neon-dashboard-bg {
           min-height: 100vh;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #232526 0%, #1a2980 100%);
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 32px 8px;
+          font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
         }
-        .user-dashboard-card {
-          max-width: 480px;
+        .neon-dashboard-wrapper {
           width: 100%;
-          background: rgba(255,255,255,0.15);
-          box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
-          backdrop-filter: blur(12px);
+          max-width: 520px;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+        .neon-dashboard-card {
+          width: 100%;
+          background: rgba(20,20,40,0.85);
+          box-shadow: 0 0 32px 0 #00fff7cc, 0 8px 32px 0 #1a298088;
           border-radius: 28px;
           padding: 38px 28px 28px 28px;
-          border: 1.5px solid rgba(255,255,255,0.22);
+          border: 2.5px solid #00fff7;
           text-align: center;
           animation: fadeInDash 1s cubic-bezier(.39,.575,.56,1) both;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
         }
-        .user-dashboard-title {
+        .neon-dashboard-title {
           font-size: 2.1rem;
-          font-weight: 800;
+          font-weight: 900;
           letter-spacing: 1px;
           color: #fff;
           margin-bottom: 8px;
-          text-shadow: 0 2px 12px #0002;
+          text-shadow: 0 0 8px #00fff7, 0 2px 12px #0008;
         }
-        .user-dashboard-sub {
-          color: #e0e7ff;
+        .neon-dashboard-sub {
+          color: #b2f7ff;
           font-size: 1.1rem;
-          margin-bottom: 28px;
+          margin-bottom: 0;
+          text-shadow: 0 0 4px #00fff7;
         }
-        .user-dashboard-actions {
+        .neon-dashboard-actions {
           display: flex;
           gap: 18px;
           justify-content: center;
-          margin-bottom: 32px;
+          margin-bottom: 0;
+          flex-wrap: wrap;
         }
-        .user-btn {
+        .neon-btn {
           padding: 12px 28px;
           border-radius: 14px;
-          border: none;
-          background: rgba(255,255,255,0.22);
-          color: #764ba2;
+          border: 2px solid #00fff7;
+          background: transparent;
+          color: #00fff7;
           font-weight: 700;
           font-size: 1.08rem;
           letter-spacing: 1px;
           cursor: pointer;
-          box-shadow: 0 2px 8px #764ba222;
-          transition: background 0.2s, color 0.2s, transform 0.1s;
+          box-shadow: 0 0 8px #00fff7, 0 2px 8px #00fff733;
+          transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
           text-decoration: none;
           display: inline-block;
+          outline: none;
         }
-        .user-btn-primary {
-          background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-          color: #fff;
+        .neon-btn-primary {
+          background: linear-gradient(90deg, #00fff7 0%, #764ba2 100%);
+          color: #232526;
+          border: 2px solid #00fff7;
+          box-shadow: 0 0 16px #00fff7, 0 2px 8px #764ba288;
         }
-        .user-btn:hover {
-          background: #fff;
-          color: #764ba2;
+        .neon-btn:hover {
+          background: #00fff7;
+          color: #232526;
+          box-shadow: 0 0 24px #00fff7, 0 2px 12px #00fff799;
           transform: scale(1.04);
         }
-        .user-dashboard-feature-card {
-          background: rgba(255,255,255,0.18);
+        .neon-btn-logout {
+          background: linear-gradient(90deg,#e96443,#904e95);
+          color: #fff;
+          border: 2px solid #e96443;
+          box-shadow: 0 0 12px #e96443, 0 2px 8px #904e9588;
+        }
+        .neon-btn-logout:hover {
+          background: #fff;
+          color: #e96443;
+          box-shadow: 0 0 24px #e96443, 0 2px 12px #e9644399;
+        }
+        .neon-dashboard-feature-card {
+          background: rgba(0,255,247,0.08);
           border-radius: 18px;
           padding: 22px 16px 12px 16px;
-          margin-top: 10px;
-          box-shadow: 0 2px 12px #764ba222;
+          margin-top: 0;
+          box-shadow: 0 0 12px #00fff7cc;
+          border: 1.5px solid #00fff7;
         }
-        .user-dashboard-feature-card h3 {
-          color: #764ba2;
+        .neon-dashboard-feature-card h3 {
+          color: #00fff7;
           font-size: 1.15rem;
           font-weight: 700;
           margin-bottom: 10px;
+          text-shadow: 0 0 8px #00fff7;
         }
-        .user-dashboard-feature-card ul {
-          color: #222;
+        .neon-dashboard-feature-card ul {
+          color: #fff;
           text-align: left;
           margin: 0 auto;
           max-width: 320px;
           font-size: 1.01rem;
           padding-left: 18px;
         }
-        .user-dashboard-feature-card li {
+        .neon-dashboard-feature-card li {
           margin-bottom: 7px;
+          text-shadow: 0 0 4px #00fff7;
+        }
+        .neon-dashboard-logout-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-top: 32px;
         }
         @keyframes fadeInDash {
           0% { opacity: 0; transform: translateY(30px) scale(0.98); }
           100% { opacity: 1; transform: translateY(0) scale(1); }
         }
-        @media (max-width: 600px) {
-          .user-dashboard-card { padding: 18px 4px 12px 4px; }
-          .user-dashboard-title { font-size: 1.3rem; }
+        .alur-card {
+          margin: 32px auto 0 auto;
+          max-width: 520px;
+          background: rgba(0,255,247,0.10);
+          border-radius: 18px;
+          box-shadow: 0 0 12px #00fff744;
+          border: 1.5px solid #00fff7;
+          padding: 24px 18px 18px 18px;
+          text-align: left;
+          animation: fadeInDash 1.2s 0.2s both;
+        }
+        .alur-title {
+          color: #00fff7;
+          font-size: 1.13rem;
+          font-weight: 700;
+          margin-bottom: 14px;
+          text-align: center;
+          text-shadow: 0 0 8px #00fff7;
+        }
+        .alur-steps {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .alur-steps li {
+          display: flex;
+          align-items: flex-start;
+          gap: 14px;
+          margin-bottom: 14px;
+        }
+        .alur-step-num {
+          display: inline-block;
+          min-width: 32px;
+          height: 32px;
+          background: linear-gradient(135deg,#00fff7 60%,#764ba2 100%);
+          color: #232526;
+          font-weight: 800;
+          font-size: 1.1rem;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 32px;
+          box-shadow: 0 0 8px #00fff7aa;
+        }
+        .alur-step-text {
+          color: #fff;
+          font-size: 1.04rem;
+        }
+        @media (max-width: 700px) {
+          .neon-dashboard-wrapper {
+            max-width: 100vw;
+            padding: 0 0px;
+          }
+          .neon-dashboard-card {
+            padding: 18px 4px 12px 4px;
+            border-radius: 16px;
+            gap: 16px;
+          }
+          .neon-dashboard-title { font-size: 1.2rem; }
+          .neon-dashboard-actions {
+            flex-direction: column;
+            gap: 10px;
+          }
+          .neon-btn, .neon-btn-primary {
+            width: 100%;
+            min-width: 0;
+            font-size: 1rem;
+            padding: 12px 0;
+          }
+          .neon-dashboard-feature-card {
+            padding: 14px 6px 8px 6px;
+            border-radius: 10px;
+          }
+          .neon-dashboard-logout-wrapper {
+            margin-top: 18px;
+          }
+          .alur-card {
+            max-width: 100vw;
+            padding: 14px 4px 10px 4px;
+            border-radius: 10px;
+          }
+          .alur-step-num {
+            min-width: 26px;
+            height: 26px;
+            font-size: 0.98rem;
+            line-height: 26px;
+          }
+          .alur-step-text {
+            font-size: 0.97rem;
+          }
         }
       `}</style>
     </div>
