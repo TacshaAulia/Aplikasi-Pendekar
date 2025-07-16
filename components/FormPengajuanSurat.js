@@ -29,11 +29,11 @@ export default function FormPengajuanSurat() {
   };
 
   return (
-    <div className="pengajuan-form-container">
-      <form className="pengajuan-form" onSubmit={handleSubmit} autoComplete="off">
-        <h2 className="pengajuan-title">Pengajuan Surat</h2>
-        {success && <div className="pengajuan-success">{success}</div>}
-        {error && <div className="pengajuan-error">{error}</div>}
+    <div className="neon-pengajuan-form-bg">
+      <form className="neon-pengajuan-form" onSubmit={handleSubmit} autoComplete="off">
+        <h2 className="neon-pengajuan-title">Pengajuan Surat</h2>
+        {success && <div className="neon-pengajuan-success">{success}</div>}
+        {error && <div className="neon-pengajuan-error">{error}</div>}
         <div className="input-group">
           <label htmlFor="jenisSurat"><span className="icon">📄</span> Jenis Surat</label>
           <select
@@ -58,56 +58,57 @@ export default function FormPengajuanSurat() {
             rows={3}
           />
         </div>
-        <button className="pengajuan-btn" type="submit" disabled={loading}>
+        <button className="neon-pengajuan-btn" type="submit" disabled={loading}>
           {loading ? 'Memproses...' : 'Ajukan Surat'}
         </button>
       </form>
       <style jsx>{`
-        .pengajuan-form-container {
+        .neon-pengajuan-form-bg {
+          min-height: 100vh;
+          background: linear-gradient(135deg, #232526 0%, #1a2980 100%);
           display: flex;
+          align-items: center;
           justify-content: center;
-          align-items: flex-start;
-          min-height: 400px;
-          padding: 24px 0;
+          padding: 32px 8px;
         }
-        .pengajuan-form {
+        .neon-pengajuan-form {
           width: 100%;
-          max-width: 400px;
-          background: rgba(255,255,255,0.15);
-          border-radius: 18px;
-          box-shadow: 0 8px 32px 0 rgba(31,38,135,0.12);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255,255,255,0.18);
-          padding: 36px 32px 28px 32px;
+          max-width: 420px;
+          background: rgba(20,20,40,0.85);
+          box-shadow: 0 0 32px 0 #00fff7cc, 0 8px 32px 0 #1a298088;
+          border-radius: 24px;
+          border: 2.5px solid #00fff7;
+          padding: 38px 28px 28px 28px;
           display: flex;
           flex-direction: column;
           gap: 18px;
-          animation: fadeInLogin 1s cubic-bezier(.39,.575,.56,1) both;
+          font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
         }
-        .pengajuan-title {
+        .neon-pengajuan-title {
           text-align: center;
           font-size: 1.7rem;
-          font-weight: 700;
+          font-weight: 800;
           margin-bottom: 8px;
-          background: linear-gradient(45deg, #667eea, #764ba2);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #fff;
+          text-shadow: 0 0 8px #00fff7, 0 2px 12px #0008;
         }
-        .pengajuan-success {
-          background: rgba(0,200,0,0.08);
-          color: #059669;
+        .neon-pengajuan-success {
+          background: #2ecc7122;
+          color: #2ecc71;
           border-radius: 8px;
           padding: 8px 12px;
           text-align: center;
           font-size: 0.98rem;
+          box-shadow: 0 0 8px #2ecc7144;
         }
-        .pengajuan-error {
-          background: rgba(255,0,0,0.08);
-          color: #d90429;
+        .neon-pengajuan-error {
+          background: #e74c3c22;
+          color: #e74c3c;
           border-radius: 8px;
           padding: 8px 12px;
           text-align: center;
           font-size: 0.98rem;
+          box-shadow: 0 0 8px #e74c3c44;
         }
         .input-group {
           display: flex;
@@ -117,10 +118,11 @@ export default function FormPengajuanSurat() {
         .input-group label {
           font-size: 1rem;
           font-weight: 500;
-          color: #4b5563;
+          color: #00fff7;
           display: flex;
           align-items: center;
           gap: 6px;
+          text-shadow: 0 0 4px #00fff7;
         }
         .icon {
           font-size: 1.1em;
@@ -128,52 +130,45 @@ export default function FormPengajuanSurat() {
         .input-group select,
         .input-group textarea {
           padding: 10px 14px;
-          border-radius: 8px;
-          border: 1px solid #c7d2fe;
-          background: rgba(255,255,255,0.7);
+          border-radius: 10px;
+          border: 2px solid #00fff7;
+          background: rgba(0,255,247,0.08);
+          color: #fff;
           font-size: 1rem;
           outline: none;
-          transition: border 0.2s;
+          transition: border 0.2s, background 0.2s;
         }
         .input-group select:focus,
         .input-group textarea:focus {
-          border: 1.5px solid #764ba2;
-          background: #fff;
+          border: 2px solid #764ba2;
+          background: #232526;
         }
-        .pengajuan-btn {
+        .neon-pengajuan-btn {
           margin-top: 10px;
           padding: 12px 0;
-          border-radius: 8px;
-          border: none;
-          background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-          color: #fff;
+          border-radius: 12px;
+          border: 2px solid #00fff7;
+          background: linear-gradient(90deg, #00fff7 0%, #764ba2 100%);
+          color: #232526;
           font-size: 1.1rem;
-          font-weight: 600;
+          font-weight: 700;
           letter-spacing: 1px;
           cursor: pointer;
-          box-shadow: 0 2px 8px rgba(118,75,162,0.12);
-          transition: background 0.2s, transform 0.1s;
+          box-shadow: 0 0 16px #00fff7, 0 2px 8px #764ba288;
+          transition: background 0.2s, color 0.2s, transform 0.1s;
         }
-        .pengajuan-btn:active {
+        .neon-pengajuan-btn:active {
           transform: scale(0.98);
         }
-        .pengajuan-btn:disabled {
+        .neon-pengajuan-btn:disabled {
           background: #a5b4fc;
+          color: #888;
           cursor: not-allowed;
         }
-        @keyframes fadeInLogin {
-          0% {
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
         @media (max-width: 500px) {
-          .pengajuan-form {
-            padding: 24px 10px 18px 10px;
+          .neon-pengajuan-form {
+            padding: 18px 4px 12px 4px;
+            border-radius: 14px;
           }
         }
       `}</style>

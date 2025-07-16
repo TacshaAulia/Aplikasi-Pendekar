@@ -6,6 +6,8 @@ export default function DataPendudukTable() {
   const [error, setError] = useState('');
   const [form, setForm] = useState({ nik: '', nama: '', alamat: '', tanggal_lahir: '' });
   const [editId, setEditId] = useState(null);
+  // Tambahkan state untuk pencarian nama
+  const [search, setSearch] = useState("");
 
   const fetchData = async () => {
     setLoading(true);
@@ -90,6 +92,14 @@ export default function DataPendudukTable() {
           marginBottom: 24,
           textShadow: '0 2px 8px #0006',
         }}>Data Penduduk</h2>
+        {/* Input pencarian nama */}
+        <input
+          type="text"
+          placeholder="Cari nama penduduk..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ marginBottom: 16, padding: '8px 12px', borderRadius: 8, border: '1px solid #ccc', minWidth: 200 }}
+        />
         <form onSubmit={handleSubmit} style={{
           display: 'flex',
           flexWrap: 'wrap',
@@ -122,19 +132,22 @@ export default function DataPendudukTable() {
                 {data.length === 0 ? (
                   <tr><td colSpan="6" style={{ textAlign: 'center', color: '#fff' }}>Belum ada data</td></tr>
                 ) : (
-                  data.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td>{idx + 1}</td>
-                      <td>{item.nik}</td>
-                      <td>{item.nama}</td>
-                      <td>{item.alamat}</td>
-                      <td>{item.tanggal_lahir}</td>
-                      <td>
-                        <button style={actionBtn} onClick={() => handleEdit(item)}>Edit</button>{' '}
-                        <button style={{...actionBtn, background:'#e74c3c'}} onClick={() => handleDelete(item.id)}>Hapus</button>
-                      </td>
-                    </tr>
-                  ))
+                  // Filter data berdasarkan pencarian nama
+                  data
+                    .filter(item => item.nama.toLowerCase().includes(search.toLowerCase()))
+                    .map((item, idx) => (
+                      <tr key={item.id}>
+                        <td>{idx + 1}</td>
+                        <td>{item.nik}</td>
+                        <td>{item.nama}</td>
+                        <td>{item.alamat}</td>
+                        <td>{item.tanggal_lahir}</td>
+                        <td>
+                          <button style={actionBtn} onClick={() => handleEdit(item)}>Edit</button>{' '}
+                          <button style={{...actionBtn, background:'#e74c3c'}} onClick={() => handleDelete(item.id)}>Hapus</button>
+                        </td>
+                      </tr>
+                    ))
                 )}
               </tbody>
             </table>
