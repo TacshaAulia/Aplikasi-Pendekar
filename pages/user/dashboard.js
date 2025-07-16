@@ -55,6 +55,11 @@ export default function UserDashboard({ userEmail }) {
     <div className="neon-dashboard-bg">
       <div className="neon-dashboard-wrapper">
         <div className="neon-dashboard-card">
+          {/* Banner motivasi */}
+          <div className="motivasi-banner">
+            <span className="motivasi-icon">🌟</span>
+            <span className="motivasi-text">Tetap semangat! Pelayanan desa kini lebih mudah dan cepat 💡</span>
+          </div>
           <h1 className="neon-dashboard-title">👾 Dashboard User</h1>
           <p className="neon-dashboard-sub">Aplikasi Pelayanan Surat Desa Karyalaksana</p>
           <div className="neon-dashboard-actions">
@@ -475,6 +480,37 @@ export default function UserDashboard({ userEmail }) {
           }
           .neon-dashboard-extras {
             display: none;
+          }
+        }
+        .motivasi-banner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          background: linear-gradient(90deg, #00fff7 0%, #43cea2 100%);
+          color: #222;
+          font-weight: 700;
+          font-size: 1.08rem;
+          border-radius: 16px;
+          padding: 14px 18px;
+          margin-bottom: 18px;
+          box-shadow: 0 2px 12px #00fff733;
+          letter-spacing: 0.5px;
+          text-align: center;
+          animation: fadeInDash 1.2s cubic-bezier(.39,.575,.56,1) both;
+        }
+        .motivasi-icon {
+          font-size: 1.5rem;
+          filter: drop-shadow(0 0 4px #fff8);
+        }
+        @media (max-width: 600px) {
+          .motivasi-banner {
+            font-size: 0.98rem;
+            padding: 10px 8px;
+            margin-bottom: 12px;
+          }
+          .motivasi-icon {
+            font-size: 1.1rem;
           }
         }
       `}</style>
