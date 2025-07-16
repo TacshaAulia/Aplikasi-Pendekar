@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function RegisterUser() {
   const [form, setForm] = useState({ nama: '', email: '', password: '', confirm: '' });
@@ -48,6 +49,9 @@ export default function RegisterUser() {
 
   return (
     <div className="register-user-container">
+      <Link href="/" legacyBehavior>
+        <a style={{display:'inline-block',marginBottom:16,padding:'8px 18px',borderRadius:8,background:'#eee',color:'#333',textDecoration:'none',fontWeight:600,boxShadow:'0 2px 8px #0001'}}>← Kembali</a>
+      </Link>
       <form className="register-user-form" onSubmit={handleSubmit} autoComplete="off">
         <h2 className="register-title">Daftar Akun Baru</h2>
         {error && <div className="register-error">{error}</div>}
